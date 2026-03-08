@@ -41,34 +41,37 @@ ul {
   list-style: none;
 }
 
-/* ===== NAVBAR ===== */
-nav {
+/* ===== NAVBAR (top nav only) ===== */
+body:not(.admin-body) nav {
   background-color: var(--primary);
   padding: 15px 30px;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 999;
 }
 
-nav .logo {
+body:not(.admin-body) nav .logo {
   color: var(--accent);
   font-size: 1.5rem;
   font-weight: 700;
   letter-spacing: 2px;
 }
 
-nav ul {
+body:not(.admin-body) nav ul {
   display: flex;
   gap: 25px;
 }
 
-nav ul li a {
+body:not(.admin-body) nav ul li a {
   color: var(--white);
   font-size: 0.95rem;
 }
 
-nav ul li a:hover,
-nav ul li a.active {
+body:not(.admin-body) nav ul li a:hover,
+body:not(.admin-body) nav ul li a.active {
   color: var(--accent);
   text-decoration: none;
 }
@@ -690,9 +693,9 @@ footer {
 }
 
 .footer-hours td {
-  color: #aaa;
-  font-size: 0.82rem;
-  padding: 3px 0;
+  color: #000000;
+  font-size: 0.85rem;
+  padding: 3px 10PX;
 }
 
 .footer-hours td:last-child {
@@ -992,34 +995,259 @@ body.admin-body {
   font-size: 0.85rem;
 }
 
-/* ===== RESPONSIVE – TABLET ===== */
-@media (max-width: 1023px) {
-  .grid-4      { grid-template-columns: repeat(2, 1fr); }
-  .grid-3      { grid-template-columns: repeat(2, 1fr); }
-  .trainers-grid { grid-template-columns: repeat(2, 1fr); }
-  .footer-grid { grid-template-columns: 1fr 1fr; }
-  .stats-grid  { grid-template-columns: repeat(2, 1fr); }
-  .contact-layout { grid-template-columns: 1fr; }
-  .hero { flex-direction: column; text-align: center; }
-  .hero-image img { max-width: 300px; margin: 0 auto; display: block; }
+/* ===== HAMBURGER BUTTON ===== */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 6px;
 }
 
-/* ===== RESPONSIVE – MOBILE ===== */
+.hamburger span {
+  display: block;
+  width: 24px;
+  height: 2px;
+  background-color: var(--white);
+  transition: 0.3s;
+}
+
+/* Hamburger → X animation */
+.hamburger.open span:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+.hamburger.open span:nth-child(2) {
+  opacity: 0;
+}
+.hamburger.open span:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+/* Mobile nav menu (hidden by default) */
+.mobile-menu {
+  display: none;
+  flex-direction: column;
+  background-color: #111827;
+  padding: 10px 0;
+  border-top: 1px solid rgba(255,255,255,0.08);
+  position: sticky;
+  top: 53px;   /* height of nav */
+  z-index: 998;
+}
+
+.mobile-menu.open {
+  display: flex;
+}
+
+.mobile-menu a {
+  color: var(--white);
+  padding: 14px 25px;
+  font-size: 1rem;
+  font-weight: 500;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+
+.mobile-menu a:hover,
+.mobile-menu a.active {
+  color: var(--accent);
+  background-color: rgba(226,176,74,0.08);
+  text-decoration: none;
+}
+
+.mobile-menu .menu-join {
+  margin: 15px 20px;
+  text-align: center;
+  background-color: var(--accent);
+  color: var(--primary);
+  padding: 13px;
+  border-radius: 5px;
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+.mobile-menu .menu-join:hover {
+  opacity: 0.88;
+  color: var(--primary);
+}
+
+/* ===== RESPONSIVE – TABLET (768px – 1023px) ===== */
+@media (max-width: 1023px) {
+  .grid-4        { grid-template-columns: repeat(2, 1fr); }
+  .grid-3        { grid-template-columns: repeat(2, 1fr); }
+  .trainers-grid { grid-template-columns: repeat(2, 1fr); }
+  .footer-grid   { grid-template-columns: 1fr 1fr; }
+  .stats-grid    { grid-template-columns: repeat(2, 1fr); }
+  .contact-layout { grid-template-columns: 1fr; }
+
+  .hero {
+    flex-direction: column;
+    text-align: center;
+    padding: 50px 25px;
+    gap: 30px;
+  }
+  .hero-text p  { margin: 0 auto 25px; max-width: 500px; }
+  .hero-image img { max-width: 320px; margin: 0 auto; display: block; }
+}
+
+/* ===== RESPONSIVE – MOBILE (max 767px) ===== */
 @media (max-width: 767px) {
-  nav ul { display: none; }
 
-  .grid-4      { grid-template-columns: 1fr; }
-  .grid-3      { grid-template-columns: 1fr; }
-  .trainers-grid { grid-template-columns: 1fr; }
-  .footer-grid { grid-template-columns: 1fr; }
-  .stats-grid  { grid-template-columns: 1fr; }
-  .form-row    { grid-template-columns: 1fr; }
+  /* --- NAV --- */
+  nav {
+    padding: 14px 18px;
+    position: sticky;
+    top: 0;
+    z-index: 999;
+  }
 
-  .hero { padding: 40px 20px; }
-  .hero-text h1 { font-size: 2rem; }
+  body:not(.admin-body) nav ul  { display: none; }   /* hide desktop links */
+  body:not(.admin-body) nav .btn { display: none; }   /* hide desktop join button */
+  .hamburger { display: flex; } /* show hamburger */
 
-  .admin-layout { flex-direction: column; }
-  .admin-sidebar { width: 100%; min-height: auto; }
+  /* --- HERO --- */
+  .hero {
+    flex-direction: column;
+    padding: 35px 18px 40px;
+    text-align: center;
+    gap: 25px;
+  }
 
-  .footer-bar { font-size: 0.78rem; }
+  .hero-text h4 { font-size: 0.8rem; }
+  .hero-text h1 { font-size: 1.9rem; line-height: 1.25; }
+  .hero-text p  { font-size: 0.88rem; margin: 0 auto 20px; }
+  .hero-image img { max-width: 260px; margin: 0 auto; display: block; }
+
+  /* --- PAGE TITLE --- */
+  .page-title   { padding: 30px 18px; }
+  .page-title h1 { font-size: 1.6rem; }
+  .page-title p  { font-size: 0.85rem; }
+
+  /* --- CONTAINER --- */
+  .container { padding: 30px 16px; }
+
+  /* --- SECTION TITLES --- */
+  h2.section-title { font-size: 1.35rem; }
+
+  /* --- GRIDS → single column --- */
+  .grid-4,
+  .grid-3,
+  .trainers-grid,
+  .footer-grid,
+  .stats-grid { grid-template-columns: 1fr; }
+
+  /* --- FORM --- */
+  .form-row    { grid-template-columns: 1fr; gap: 0; }
+  .form-card   { padding: 20px 16px; }
+  .form-card h2 { font-size: 1.15rem; }
+
+  /* Make all inputs big enough to tap easily (44px min) */
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    padding: 13px 12px;
+    font-size: 1rem;       /* prevents iOS zoom on focus */
+  }
+
+  .form-group label { font-size: 0.9rem; }
+
+  fieldset  { padding: 15px 14px; margin-bottom: 16px; }
+
+  /* --- BUTTONS --- */
+  .btn {
+    width: 100%;
+    text-align: center;
+    padding: 14px 20px;
+    font-size: 1rem;
+  }
+
+  /* Keep plan card buttons full-width but not other inline links */
+  .card a.btn,
+  nav .btn { width: auto; }
+
+  /* --- CARDS --- */
+  .card  { padding: 20px 16px; }
+  .plan-card { padding: 22px 18px; }
+
+  /* --- TABLE: horizontal scroll on mobile --- */
+  table {
+    display: block;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    white-space: nowrap;
+  }
+
+  table thead,
+  table tbody,
+  table tr { display: table-row-group; }
+
+  table thead { display: table-header-group; }
+  table tr    { display: table-row; }
+  table th,
+  table td    { display: table-cell; }
+
+  table th,
+  table td { padding: 11px 14px; font-size: 0.82rem; }
+
+  /* footer hours table stays normal */
+  .footer-hours { display: table; overflow-x: unset; white-space: normal; }
+  .footer-hours tr,
+  .footer-hours td { display: table-cell; }
+
+  /* --- TRAINER CARDS --- */
+  .trainer-card figure img { width: 90px; height: 90px; }
+
+  /* --- CONTACT --- */
+  .contact-layout { grid-template-columns: 1fr; gap: 20px; }
+  .contact-info   { padding: 20px 16px; }
+
+  /* --- FOOTER --- */
+  .footer-grid   { grid-template-columns: 1fr; gap: 20px; }
+  footer         { padding: 30px 18px 15px; }
+  .footer-bar    { font-size: 0.78rem; text-align: center; }
+
+  /* --- ADMIN SIDEBAR → top bar on mobile --- */
+  .admin-layout  { flex-direction: column; }
+
+  .admin-sidebar {
+    width: 100%;
+    min-height: auto;
+    position: relative;
+  }
+
+  .admin-sidebar nav ul {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 6px 10px;
+    gap: 4px;
+  }
+
+  .admin-sidebar nav ul li a {
+    padding: 9px 13px;
+    font-size: 0.78rem;
+    border-radius: 5px;
+    border-left: none !important;
+  }
+
+  .admin-sidebar nav ul li a.active,
+  .admin-sidebar nav ul li a:hover {
+    padding-left: 13px;
+  }
+
+  .admin-main { padding: 16px; }
+
+  .admin-topbar { flex-direction: column; align-items: flex-start; gap: 5px; margin-bottom: 16px; }
+  .admin-topbar h1 { font-size: 1.1rem; }
+
+  .stats-grid  { grid-template-columns: 1fr 1fr; gap: 12px; }
+  .stat-card   { padding: 14px; }
+  .stat-card .stat-value { font-size: 1.4rem; }
+
+  .admin-card  { padding: 16px; }
+  .admin-card h2 { font-size: 0.95rem; }
+
+  /* --- LOGIN PAGE --- */
+  .login-card  { padding: 28px 20px; margin: 15px; }
+  .admin-submit { padding: 14px; font-size: 1rem; }
 }
